@@ -15,10 +15,9 @@ function URLContainer() {
 
   async function sendRequest() {
     const data = await window.api.request(state)
-    // console.log(data)
   }
 
-  return <div className="px-4 py-2 flex items-center gap-4">
+  return <div className="mt-4 px-4 py-2 flex items-center gap-4">
     <SelectMethod />
     <URLEndpoint />
     <Button

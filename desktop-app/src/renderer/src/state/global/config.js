@@ -10,6 +10,35 @@ export const initialState = {
     snippet: {
       selected: "curl"
     }
-  }
+  },
 
+
+  environment: {
+
+    // to manage multiple environments
+    // compulsory folder global
+    envs: [
+      {
+        id: 1,
+        name: "Global",
+        error: {
+          hasError: false,
+          message: ""
+        },
+        mandatory: true,
+        values: [],
+        /**
+         * {
+         *    id: Number,
+         *    name: String,
+         *    value: String | Boolean | Number
+         * }
+         */
+      }
+    ],
+    error: {
+      hasError: false,
+      message: ""
+    }
+  }
 }

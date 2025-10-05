@@ -6,7 +6,7 @@ import URLHeaders from "./url-headers"
 import URLParams from "./url-params"
 
 function URLBuilder() {
-  return <div className="p-4">
+  return <div className="px-4 py-2">
     <Tabs defaultValue="params">
       <URLBuilderHeader />
       <URLParams />
