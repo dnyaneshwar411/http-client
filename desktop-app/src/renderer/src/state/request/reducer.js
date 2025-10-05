@@ -159,7 +159,8 @@ export function reducer(state, action) {
                 id: state.headers.values.length + 1,
                 selected: true,
                 name: "",
-                value: ""
+                value: "",
+                includeInSnippet: true
               }
             ]
         }

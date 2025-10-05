@@ -31,16 +31,31 @@ function AuthorizationNoAuth() {
 function AuthorizationBasicAuth() {
   const {
     state: {
-      authorization: { selected }
-    }
+      authorization: {
+        basic: { value, ...basic },
+        ...authorization
+      }
+    },
+    dispatch
   } = useRequestContext();
-  if (selected !== "basic") return <></>
+  if (authorization.selected !== "basic") return <></>
   return <div>
     <label className="mb-4 flex items-center">
       <div className="w-xs">User Name</div>
       <Input
         placeholder="User Name"
         className="max-w-sm"
+        value={value.username}
+        onChange={e => dispatch(authorizationUpdate({
+          ...authorization,
+          basic: {
+            ...basic,
+            value: {
+              ...value,
+              username: e.target.value
+            }
+          }
+        }))}
       />
     </label>
     <label className="flex items-center">
@@ -48,9 +63,20 @@ function AuthorizationBasicAuth() {
       <Input
         placeholder="Password"
         className="max-w-sm"
+        value={value.password}
+        onChange={e => dispatch(authorizationUpdate({
+          ...authorization,
+          basic: {
+            ...basic,
+            value: {
+              ...value,
+              password: e.target.value
+            }
+          }
+        }))}
       />
     </label>
-  </div >
+  </div>
 }
 
 function AuthorizationBearerToken() {

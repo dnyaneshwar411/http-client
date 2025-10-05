@@ -40,6 +40,7 @@ export const initialState = {
 
 
   authorization: {
+    // noauth, basic, bearer
     selected: "bearer",
 
     /**
@@ -56,6 +57,17 @@ export const initialState = {
       */
     "bearer": {
       value: "",
+      error: {
+        hasError: false,
+        message: ""
+      }
+    },
+
+    basic: {
+      value: {
+        username: "",
+        password: ""
+      },
       error: {
         hasError: false,
         message: ""

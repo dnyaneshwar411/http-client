@@ -1,0 +1,22 @@
+export const SNIPPETS = [
+  { id: 1, enabled: true, name: "cURL", value: "curl" },
+  { id: 2, enabled: true, name: "JavaScript - Fetch", value: "javascript-fetch" },
+  { id: 3, enabled: true, name: "JavaScript - Axios (Node.js)", value: "nodejs-axios" },
+  { id: 4, enabled: true, name: "JavaScript - XMLHttpRequest", value: "javascript-xhr" },
+  { id: 5, enabled: true, name: "Node.js - Native (http)", value: "nodejs-native" },
+  { id: 6, enabled: false, name: "Python - Requests", value: "python-requests" },
+  { id: 7, enabled: false, name: "Python - http.client", value: "python-httpclient" },
+  { id: 8, enabled: false, name: "Go - net/http", value: "go-http" },
+  { id: 9, enabled: false, name: "PHP - cURL", value: "php-curl" },
+  { id: 10, enabled: false, name: "PHP - HTTP Request 2", value: "php-http2" },
+  { id: 11, enabled: false, name: "Ruby - Net::HTTP", value: "ruby-nethttp" },
+  { id: 12, enabled: false, name: "C# - RestSharp", value: "csharp-restsharp" },
+  { id: 13, enabled: false, name: "C# - HttpClient", value: "csharp-httpclient" },
+  { id: 14, enabled: false, name: "Java - OkHttp", value: "java-okhttp" },
+  { id: 15, enabled: false, name: "Java - Unirest", value: "java-unirest" },
+  { id: 16, enabled: false, name: "Shell - HTTPie", value: "shell-httpie" },
+  { id: 17, enabled: false, name: "Shell - wget", value: "shell-wget" },
+  { id: 18, enabled: false, name: "PowerShell - Invoke-RestMethod", value: "powershell-invoke-restmethod" },
+  { id: 19, enabled: false, name: "Swift - URLSession", value: "swift-urlsession" },
+  { id: 20, enabled: false, name: "Kotlin - OkHttp", value: "kotlin-okhttp" }
+].filter(snippet => snippet.enabled)

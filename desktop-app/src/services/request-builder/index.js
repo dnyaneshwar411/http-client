@@ -52,7 +52,7 @@ export function buildRequestURL(endpoint, paramsList) {
   return buildUrlWithQueryParams(endpoint, params)
 }
 
-function buildRequestBody(body) {
+export function buildRequestBody(body) {
   switch (body.selected) {
 
     case "none":
@@ -88,7 +88,7 @@ function buildRequestBody(body) {
   }
 }
 
-function buildRequestHeaders(headersList) {
+export function buildRequestHeaders(headersList) {
   const headers = new Headers();
 
   const selectedHeaders = headersList
@@ -108,15 +108,18 @@ function buildRequestHeaders(headersList) {
    * but are required during a fetch request over network
    * e.g. "Content-Security-Policy": "default-src '*'; img-src 'self' example.com"
    */
-  headers.append("Content-Security-Policy", "connect-src none")
 
   return headers
 }
 
-function buildAuthObject(authorization) {
+export function buildAuthObject(authorization) {
+  console.log(authorization)
   switch (authorization.selected) {
     case "bearer": {
       return `Bearer ${authorization.bearer.value}`
+    }
+    case "basic": {
+      return `Basic ${authorization.basic.value.username}:${authorization.basic.value.password}`
     }
 
     default:

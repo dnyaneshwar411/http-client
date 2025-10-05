@@ -11,7 +11,8 @@ import { useMemo } from "react"
 import cn from "../../lib/cn"
 import {
   headersAdd, headersRemove,
-  headersSelect, headersUnselect
+  headersSelect, headersUnselect,
+  headersUpdate
 } from "../../state/request/reducer"
 
 export default function URLHeaders() {
@@ -81,6 +82,7 @@ function HeaderDetails({ header }) {
         defaultValue={header.name}
         type="text"
         className="absolute h-full w-full inset-0 !focus:outline-none focus:ring-0 border-0"
+        onChange={e => dispatch(headersUpdate({ ...header, name: e.target.value }))}
       />
     </TableCell>
     <TableCell className="h-[40px] relative">
@@ -88,6 +90,7 @@ function HeaderDetails({ header }) {
         defaultValue={header.value}
         type="text"
         className="absolute h-full w-full inset-0 !focus:outline-none focus:ring-0 border-0"
+        onChange={e => dispatch(headersUpdate({ ...header, value: e.target.value }))}
       />
     </TableCell>
     <TableCell className="h-[40px] w-9 relative">

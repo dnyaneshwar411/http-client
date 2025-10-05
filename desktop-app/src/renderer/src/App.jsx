@@ -1,24 +1,17 @@
-import { URLBuilder } from "./components/url-builder"
-import { URLContainer } from "./components/url-container"
-import { RequestContextProvider } from "./state/request/RequestProvider"
-import { Sidebar, SidebarProvider, SidebarTrigger } from "./ui/sidebar"
+import AppSidebar from "./components/sidebar"
+import { GlobalContextProvider } from "./state/global/GlobalProvider"
+import { SidebarProvider } from "./ui/sidebar"
+import AppContent from "./components/core/app-content"
+import { Toaster } from "./ui/sonner"
 
-function App() {
-  const ipcHandle = () => window.electron.ipcRenderer.send('ping')
-
+export default function App() {
   return (
-    <SidebarProvider>
-      <SidebarTrigger />
-      <Sidebar>
-      </Sidebar>
-      <RequestContextProvider>
-        <div className="p-4 space-y-4">
-          <URLContainer />
-          <URLBuilder />
-        </div>
-      </RequestContextProvider>
-    </SidebarProvider>
+    <GlobalContextProvider>
+      <SidebarProvider>
+        <AppSidebar />
+        <AppContent />
+        <Toaster richColors />
+      </SidebarProvider>
+    </GlobalContextProvider>
   )
 }
-
-export default App

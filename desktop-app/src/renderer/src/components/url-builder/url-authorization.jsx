@@ -22,9 +22,10 @@ export default function URLAuthorization() {
 
 function URLAuthorizationSelection() {
   const {
-    state: { authorization: { selected } },
+    state: { authorization: { selected, ...authorization } },
     dispatch
   } = useRequestContext();
+  console.log(authorization)
   return <div className="w-[30%] pr-4 border-r-1">
     <Select
       value={selected}

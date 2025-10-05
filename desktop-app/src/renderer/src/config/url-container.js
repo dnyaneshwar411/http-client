@@ -38,13 +38,13 @@ export const authorizationOptions = [
 
 
 export const defaultHeaders = [
-  { id: 1, selected: true, mandatory: true, name: "Cache-Control", value: "no-cache" },
-  { id: 2, selected: true, mandatory: true, name: "Postman-Token", value: "<calculated when request is sent>" },
-  { id: 3, selected: true, mandatory: false, name: "Host", value: "<calculated when request is sent>" },
-  { id: 4, selected: true, mandatory: false, name: "User-Agent", value: "PostmanRuntime/7.46.0" },
-  { id: 5, selected: true, mandatory: false, name: "Accept", value: "*/*" },
-  { id: 6, selected: true, mandatory: false, name: "Accept-Encoding", value: "gzip, deflate, br" },
-  { id: 7, selected: true, mandatory: false, name: "Connection", value: "keep-alive" }
+  { id: 1, includeInSnippet: false, selected: true, mandatory: true, name: "Cache-Control", value: "no-cache" },
+  { id: 2, includeInSnippet: false, selected: true, mandatory: true, name: "Postman-Token", value: "<calculated when request is sent>" },
+  { id: 3, includeInSnippet: false, selected: true, mandatory: false, name: "Host", value: "<calculated when request is sent>" },
+  { id: 4, includeInSnippet: false, selected: true, mandatory: false, name: "User-Agent", value: "PostmanRuntime/7.46.0" },
+  { id: 5, includeInSnippet: false, selected: true, mandatory: false, name: "Accept", value: "*/*" },
+  { id: 6, includeInSnippet: false, selected: true, mandatory: false, name: "Accept-Encoding", value: "gzip, deflate, br" },
+  { id: 7, includeInSnippet: false, selected: true, mandatory: false, name: "Connection", value: "keep-alive" }
 ];
 
 export const requestBodyOptions = [
