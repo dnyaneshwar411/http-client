@@ -95,7 +95,7 @@ export const initialState = {
     }
   },
 
-  // none, form-data, x-www-form-urlencoded, raw
+  // none, form-data, urlencoded, raw
   body: {
     selected: "none",
 
