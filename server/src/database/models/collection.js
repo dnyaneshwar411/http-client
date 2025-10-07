@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 const collectionSchema = new Schema(
   {
@@ -26,6 +26,6 @@ const collectionSchema = new Schema(
   { timestamps: true }
 );
 
-const Collection = model("Collection", collectionSchema);
+const Collection = mongoose.models.Collection || model("Collection", collectionSchema);
 
 export default Collection;

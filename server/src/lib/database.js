@@ -1,10 +1,30 @@
 import config from "@/config/config.js";
 import mongoose from "mongoose";
 
-mongoose.connect(
-  config.mongoose.url
-).then(() => {
-  console.log('Connected to MongoDB');
-});
+const MONGODB_URI = config.mongoose.url;
 
-export default mongoose.connection
+if (!MONGODB_URI) {
+  throw new Error('Please define the MONGODB_URI environment variable');
+}
+
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
+
+async function dbConnect() {
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGODB_URI).then((mongoose) => {
+      return mongoose;
+    });
+  }
+  cached.conn = await cached.promise;
+  return cached.conn;
+}
+
+export default dbConnect;

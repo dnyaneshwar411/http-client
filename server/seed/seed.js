@@ -14,7 +14,7 @@ const MONGO_URI = process.env.DATABASE;
 const WORKSPACES_TO_CREATE = 2;
 const COLLECTIONS_PER_WORKSPACE = [7, 10];
 const REQUESTS_PER_COLLECTION = [60, 70];
-console.log(MONGO_URI)
+
 // ---- HELPERS ----
 function randomBetween([min, max]) {
   return Math.floor(Math.random() * (max - min + 1)) + min;

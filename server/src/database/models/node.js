@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const nodeSchema = new Schema(
   {
@@ -47,6 +47,6 @@ const nodeSchema = new Schema(
   { timestamps: true }
 );
 
-const Node = model("Node", nodeSchema);
+const Node = mongoose.models.Node || mongoose.model("Node", nodeSchema);
 
 export default Node;

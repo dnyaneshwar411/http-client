@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose"
+import mongoose, { model, Schema } from "mongoose"
 
 const workspaceSchema = new Schema({
   name: {
@@ -19,6 +19,6 @@ const workspaceSchema = new Schema({
   }
 })
 
-const Workspace = model("Workspace", workspaceSchema)
+const Workspace = mongoose.models.Workspace || model("Workspace", workspaceSchema)
 
 export default Workspace;
