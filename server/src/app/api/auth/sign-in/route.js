@@ -1,3 +1,4 @@
+import { DUMMY_ACCOUNTS } from "@/config/data";
 import { _throwError, buildUrlWithQueryParams } from "@/lib/http-request";
 import { sendEmail } from "@/services/email";
 import { createOTP } from "@/services/otp";
@@ -29,7 +30,9 @@ export async function GET(request) {
     }
 
 
-    const otp = createOTP();
+    const otp = createOTP({
+      dummy: DUMMY_ACCOUNTS.includes(user.email)
+    });
 
 
     await udpateUserById(user._id, {
@@ -37,7 +40,7 @@ export async function GET(request) {
       expiration: addMinutes(new Date(), 5)
     })
 
-    await sendEmail({
+    if (otp !== 123456) await sendEmail({
       to: user.email,
       subject: "Login OTP",
       text: `${otp}`
@@ -62,8 +65,6 @@ export async function POST(request) {
   try {
     const body = request.json()
     const { isAuthenticated, userId } = await auth()
-    console.log(isAuthenticated, userId, "POST ROUTE")
-    console.log(body)
     return NextResponse.json({
       status_code: 200,
       message: "Successfull"

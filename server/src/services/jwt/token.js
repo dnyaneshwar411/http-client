@@ -66,12 +66,7 @@ export async function verifyAcessToken(TOKEN) {
 
 
 
-export async function signRefreshToken() {
-  const payload = {
-    ...data,
-    exp: Math.floor(Date.now() / 1000) + (15)
-  }
-
+export async function signRefreshToken(payload) {
   const SECRET = buildSecret("refresh")
 
   return await new jose
@@ -86,12 +81,24 @@ export async function signRefreshToken() {
 export async function verifyRefreshToken(TOKEN) {
   try {
     const SECRET = buildSecret("refresh")
-
-    return await jose.jwtVerify(TOKEN, SECRET)
+    const payload = await jose.jwtVerify(TOKEN, SECRET)
+    return {
+      status: "success",
+      payload
+    }
   } catch (error) {
+    const message = buildJWTVerificationError(error.message)
     return {
       status: "malformed-refresh-token",
-      message: error.message
+      message
     }
+  }
+}
+
+
+export async function buildTokens(payload) {
+  return {
+    access: await signAccessToken(payload),
+    refresh: await signRefreshToken(payload)
   }
 }

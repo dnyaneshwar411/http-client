@@ -6,7 +6,7 @@ export const sendEmail = async function ({
   subject,
   text
 }) {
-  const email = await transporter
+  await transporter
     .sendMail({
       from: from || process.env.SERVICE_EMAIL_FROM,
       to,
