@@ -1,5 +1,11 @@
 export const initialState = {
 
+  user: {
+    // loading, logged-in, logged-out, verify-otp, error
+    status: "loading"
+  },
+
+
   sidebar: {
     // collapsed, opened
     state: "collapsed",

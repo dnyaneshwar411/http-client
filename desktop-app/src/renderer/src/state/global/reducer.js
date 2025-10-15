@@ -1,5 +1,30 @@
 export function reducer(state, action) {
   switch (action.type) {
+    case "START_LOGIN":
+      return {
+        ...state,
+        user: {
+          status: "verify-otp"
+        }
+      }
+
+    case "USER_UPDATE":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...action.payload,
+        }
+      }
+
+    case "USER_LOGOUT":
+      return {
+        ...state,
+        user: {
+          status: "logged-out"
+        }
+      }
+
     case "UPDATE_SIDEBAR_SELECTED_ITEM":
       return {
         ...state,
@@ -137,6 +162,25 @@ export function reducer(state, action) {
 
     default:
       return state;
+  }
+}
+
+export function startLogin() {
+  return {
+    type: "START_LOGIN"
+  }
+}
+
+export function userUpdate(payload) {
+  return {
+    type: "USER_UPDATE",
+    payload
+  }
+}
+
+export function userLogout() {
+  return {
+    type: "USER_LOGOUT"
   }
 }
 

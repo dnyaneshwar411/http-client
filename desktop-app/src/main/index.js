@@ -1,12 +1,34 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, protocol } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { sendRequestAtURL } from '../services/request-builder'
+import { fetchData, sendData } from '../services/api'
+import { authenticateWeb, createUserSession, openURLSteps, userLoggedIn } from '../services/authentication'
+import dotenv from "dotenv"
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+
+dotenv.config()
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+protocol.registerSchemesAsPrivileged([{
+  scheme: 'xhttpclient',
+  privileges: {
+    standard: false,
+    secure: false
+  }
+}]);
+
+export let mainWindow
 
 function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     show: false,
@@ -60,6 +82,13 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+
+  app.setAsDefaultProtocolClient("xhttpclient");
+
+  app.on('open-url', (event, url) => {
+    event.preventDefault();
+    openURLSteps(url)
+  });
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -77,3 +106,32 @@ app.on('window-all-closed', () => {
 ipcMain.handle("send-request", async (event, config) => {
   return sendRequestAtURL(config);
 });
+
+ipcMain.handle("server-request-fetch", async (event, path, config) => {
+  return fetchData(path, config);
+})
+
+ipcMain.handle("server-request-send", async (event, path, config) => {
+  return sendData(path, config);
+})
+
+ipcMain.handle("server-session", async () => {
+  return userLoggedIn();
+})
+
+ipcMain.handle("authenticate-web", async () => {
+  return authenticateWeb();
+})
+
+ipcMain.handle("open-external-url", async (event, url) => {
+  shell.openExternal(url);
+})
+
+ipcMain.handle("create-user-session", async (_, code) => {
+  return await createUserSession(code)
+})
+
+
+/**
+ * Following are the end vars
+ */

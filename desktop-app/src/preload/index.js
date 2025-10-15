@@ -13,6 +13,12 @@ if (process.contextIsolated) {
     // contextBridge.exposeInMainWorld('api', api)
     contextBridge.exposeInMainWorld("api", {
       request: (config) => ipcRenderer.invoke("send-request", config),
+      fromServer: (path, config) => ipcRenderer.invoke("server-request-fetch", path, config),
+      toServer: (path, config) => ipcRenderer.invoke("server-request-send", path, config),
+      userSession: (path) => ipcRenderer.invoke("server-session", path),
+      authenticateWeb: (path) => ipcRenderer.invoke("authenticate-web", path),
+      externalURL: (path) => ipcRenderer.invoke("open-external-url", path),
+      createUserSession: (code) => ipcRenderer.invoke("create-user-session", code)
     });
   } catch (error) {
     console.error(error)
