@@ -1,9 +1,15 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 
 export default function Page() {
+  return <Suspense>
+    <Button />
+  </Suspense>
+}
+
+function Button() {
   const searchParam = useSearchParams();
 
   const code = searchParam.get("code")
