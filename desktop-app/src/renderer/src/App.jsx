@@ -9,12 +9,12 @@ import AuthGuardian from "./components/core/auth-guardian"
 export default function App() {
   return (
     <GlobalContextProvider>
+      <Toaster richColors />
       <AuthGuardian>
         <AppWorkSpaces />
         <SidebarProvider>
           <AppSidebar />
           <AppWrapper />
-          <Toaster richColors />
         </SidebarProvider>
       </AuthGuardian>
     </GlobalContextProvider>

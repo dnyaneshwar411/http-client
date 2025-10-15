@@ -4,12 +4,11 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "../../ui/input-otp"
 import { useState } from "react"
 import { Button } from "../../ui/button"
 import { useGlobalContext } from "../../state/global/GlobalProvider"
+import { toast } from "sonner"
+import { updateUserSessionStatus } from "../../state/global/reducer"
 
 export default function VerifyOTPScreen() {
   const {
-    state: {
-      user: { userId }
-    },
     dispatch
   } = useGlobalContext()
   const [loading, setLoading] = useState(false);
@@ -20,10 +19,20 @@ export default function VerifyOTPScreen() {
       setLoading(true);
       const response = await api.createUserSession(otp);
       console.log(response)
-      if (response.status_code !== 200) throw new Error(response.message);
-      // toast.success(response.message);
+
+      if (response.status_code === 401) {
+        dispatch(updateUserSessionStatus("logged-in"))
+        throw new Error(response.message);
+      }
+
+
+      if (response.status_code !== 200) {
+        throw new Error(response.message);
+      }
+
+      toast.success(response.message);
+      dispatch(updateUserSessionStatus("logged-in"))
     } catch (error) {
-      console.error(error)
       toast.error(error.message);
     } finally {
       setLoading(false);
