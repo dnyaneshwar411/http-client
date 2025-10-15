@@ -6,6 +6,10 @@ const config = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     },
+  },
+  CLERK: {
+    PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    CLIENT_ID: process.env.CLERK_CLIENT_ID
   }
 }
 

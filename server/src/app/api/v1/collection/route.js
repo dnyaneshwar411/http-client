@@ -1,11 +1,19 @@
 "use server"
-import { allSearchParams } from "@/lib/http-request";
+import { _throwError, allSearchParams } from "@/lib/http-request";
+import { buildRequestPayload } from "@/lib/request-parser";
 import { createNewCollection, retrieveUserCollections, updateCollection } from "@/services/collection";
+import { isValidObjectId } from "mongoose";
 import { NextResponse } from "next/server";
 
 export async function GET(request) {
   try {
-    const { userId, workspaceId } = allSearchParams(request.url)
+    const { _id: userId } = buildRequestPayload(request);
+
+    const { workspaceId } = allSearchParams(request.url)
+    if (!isValidObjectId(workspaceId)) _throwError(
+      400, "BAD Request: workspaceId should be a valid mongo objectId."
+    )
+
 
     const data = await retrieveUserCollections(userId, workspaceId);
 
@@ -23,7 +31,13 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const { userId, workspaceId, ...body } = await request.json()
+    const { _id: userId } = buildRequestPayload(request);
+
+
+    const { workspaceId, ...body } = await request.json()
+    if (!isValidObjectId(workspaceId)) _throwError(
+      400, "BAD Request: workspaceId should be a valid mongo objectId."
+    )
 
     await createNewCollection(userId, workspaceId, body)
 

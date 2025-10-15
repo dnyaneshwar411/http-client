@@ -9,13 +9,13 @@ export const retrieveUserCollections = async function (
   workspaceId
 ) {
   dbConnect()
-
   const workspace = await Workspace
     .findOne({
       users: userId,
       _id: workspaceId
     })
     .select("collections")
+    .populate("collections", "rootNode")
     .lean()
 
   if (!workspace) _throwError(400, "No such workspace found!");
@@ -24,8 +24,9 @@ export const retrieveUserCollections = async function (
 
   const collections = await Node
     .find({
-      collection: {
-        $in: workspace.collections
+      _id: {
+        $in: (workspace.collections || [])
+          .map(collection => collection.rootNode)
       }
     })
     .populate("collection", "name description")
