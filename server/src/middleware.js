@@ -17,21 +17,21 @@ export default clerkMiddleware(async (auth, req) => {
     if (
       Boolean(message) &&
       status === "malformed-access-token"
-    ) return NextResponse.json({ status_code: 400, message }, {
-      status: 400
+    ) return NextResponse.json({ status_code: 401, message }, {
+      status: 401
     })
 
 
     if (status === "malformed-access-token") return NextResponse.json({
-      status_code: 400,
+      status_code: 401,
       message: "Bad Request: The provided access token is malformed."
-    }, { status: 400 })
+    }, { status: 401 })
 
 
     if (status === "access-token-expired") return NextResponse.json({
-      status_code: 403,
+      status_code: 401,
       message: "JWT access token expired. Please re-authenticate or refresh your token."
-    }, { status: 403 })
+    }, { status: 401 })
 
 
 

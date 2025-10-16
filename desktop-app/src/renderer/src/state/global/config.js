@@ -1,7 +1,7 @@
 export const initialState = {
 
   user: {
-    // loading, logged-in, logged-out, verify-otp, error
+    // loading, logged-in, logged-out, verify-otp, error, session-created
     status: "loading"
   },
 

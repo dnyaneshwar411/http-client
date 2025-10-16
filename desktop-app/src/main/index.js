@@ -3,7 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { sendRequestAtURL } from '../services/request-builder'
-import { fetchData, sendData } from '../services/api'
+import { fromServer, toServer } from '../services/api'
 import { authenticateWeb, createUserSession, openURLSteps, userLoggedIn } from '../services/authentication'
 import dotenv from "dotenv"
 import path from 'path';
@@ -108,11 +108,11 @@ ipcMain.handle("send-request", async (event, config) => {
 });
 
 ipcMain.handle("server-request-fetch", async (event, path, config) => {
-  return fetchData(path, config);
+  return fromServer(path, config);
 })
 
 ipcMain.handle("server-request-send", async (event, path, config) => {
-  return sendData(path, config);
+  return toServer(path, config);
 })
 
 ipcMain.handle("server-session", async () => {

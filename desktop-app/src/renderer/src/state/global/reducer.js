@@ -1,10 +1,19 @@
 export function reducer(state, action) {
   switch (action.type) {
-    case "START_LOGIN":
+    case "UPDATE_USER_SESSION_STATUS":
       return {
         ...state,
         user: {
-          status: "verify-otp"
+          status: action.payload
+        }
+      }
+
+    case "LOGIN_USER_SESSION":
+      return {
+        ...state,
+        user: {
+          status: "session-created",
+          data: action.payload
         }
       }
 
@@ -165,9 +174,17 @@ export function reducer(state, action) {
   }
 }
 
-export function startLogin() {
+export function updateUserSessionStatus(payload) {
   return {
-    type: "START_LOGIN"
+    type: "UPDATE_USER_SESSION_STATUS",
+    payload
+  }
+}
+
+export function loginUserSession(payload) {
+  return {
+    type: "LOGIN_USER_SESSION",
+    payload
   }
 }
 

@@ -2,9 +2,10 @@ import { useEffect } from "react"
 import { useGlobalContext } from "../../state/global/GlobalProvider";
 import Loader from "../common/loader";
 import { toast } from "sonner";
-import { userLogout } from "../../state/global/reducer";
+import { loginUserSession, updateUserSessionStatus, userLogout } from "../../state/global/reducer";
 import LoggedOutScreen from "./logged-out-screen";
 import VerifyOTPScreen from "./verify-otp-screen";
+import { _throwError } from "../../lib/helpers";
 
 export default function AuthGuardian({ children }) {
   const {
@@ -14,6 +15,8 @@ export default function AuthGuardian({ children }) {
 
   async function init() {
     try {
+      if (status === "session-created") return
+      if (!["loading", "logged-in"].includes(status)) return
       const loggedIn = await api.userSession();
 
       if (!loggedIn) {
@@ -21,8 +24,20 @@ export default function AuthGuardian({ children }) {
         return;
       }
 
-      const userResponse = await api.fetchData();
+      const userResponse = await api.fromServer("/v1/profile");
+      if (userResponse.status_code === 401) {
+        dispatch(updateUserSessionStatus("logged-out"))
+        _throwError(userResponse.message)
+      }
+
+      if (userResponse.status_code !== 200) {
+        _throwError(userResponse.message)
+      }
+
+      dispatch(loginUserSession(userResponse.data))
+      toast.success("Success")
     } catch (error) {
+      dispatch(updateUserSessionStatus("logged-out"))
       toast.error(error.message || "Failed to load Data!");
     }
   }
@@ -30,7 +45,7 @@ export default function AuthGuardian({ children }) {
   useEffect(function () {
     init()
   }, [])
-  console.log(status)
+
   if (status === "loading") return <div className="h-screen flex items-center justify-center">
     <Loader />
   </div>
@@ -39,5 +54,5 @@ export default function AuthGuardian({ children }) {
 
   if (status === "verify-otp") return <VerifyOTPScreen />
 
-  if (status === "logged-in") return children
+  if (status === "session-created") return children
 }

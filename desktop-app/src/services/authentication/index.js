@@ -1,6 +1,6 @@
 import { shell } from "electron"
 import keytar from "keytar"
-import { sendData } from "../api"
+import { toServer } from "../api"
 import { mainWindow } from "../../main"
 // import { BASE_URL } from "../../main/config/config"
 
@@ -14,13 +14,13 @@ export function authenticateWeb() {
 }
 
 export async function userLoggedIn() {
-  const token = await getToken("token")
-  console.log(token)
+  const token = await getToken("access")
   return Boolean(token)
 }
 
-export async function expireSession() {
-  await keytar.deletePassword("xhttp-client@_authentication", "token")
+export async function unsetToken(token) {
+  await keytar
+    .deletePassword("xhttp-client@_authentication", token)
 }
 
 export async function setToken(key, code) {
@@ -45,26 +45,43 @@ export async function openURLSteps(endpoint) {
 
 
 export async function createUserSession(otp) {
-  console.log("condition hit", otp)
   if (!otp || otp.length !== 6) return {
     status_code: 400,
     message: "otp should be 6 digits long!"
   }
 
   const userId = await getToken("userId")
-  console.log(userId)
 
   if (!userId) return {
     status_code: 400,
     message: "user not found!"
   }
 
-  const response = await sendData("auth/verify-otp", {
+  const response = await toServer("auth/verify-otp", {
     body: {
       userId,
       otp
     }
   })
 
-  return response;
+  if (response.status_code !== 200) return response
+
+  const {
+    data: {
+      refresh,
+      access
+    }
+  } = response
+
+
+  await Promise.all([
+    setToken("access", access),
+    setToken("refresh", refresh)
+  ])
+
+
+  return {
+    status_code: 200,
+    message: "Success: logged in successfully."
+  }
 }
