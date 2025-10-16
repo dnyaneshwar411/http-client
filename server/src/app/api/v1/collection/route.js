@@ -1,15 +1,17 @@
 "use server"
 import { _throwError, allSearchParams } from "@/lib/http-request";
 import { buildRequestPayload } from "@/lib/request-parser";
-import { createNewCollection, retrieveUserCollections, updateCollection } from "@/services/collection";
+import { createNewCollection, retrieveUserCollections, updateCollection } from "@/services/db/collection";
 import { isValidObjectId } from "mongoose";
 import { NextResponse } from "next/server";
 
 export async function GET(request) {
   try {
     const { _id: userId } = buildRequestPayload(request);
+    console.log(request.url)
 
     const { workspaceId } = allSearchParams(request.url)
+    console.log(workspaceId)
     if (!isValidObjectId(workspaceId)) _throwError(
       400, "BAD Request: workspaceId should be a valid mongo objectId."
     )
@@ -25,7 +27,7 @@ export async function GET(request) {
     return NextResponse.json({
       status_code: error.statusCode || 500,
       message: error.message || "Internal Server Error!"
-    })
+    }, { status: error.statusCode || 500 })
   }
 }
 

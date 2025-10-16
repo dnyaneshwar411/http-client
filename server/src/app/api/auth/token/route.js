@@ -1,7 +1,7 @@
 import { _throwError } from "@/lib/http-request";
 import { signAccessToken, verifyRefreshToken } from "@/services/jwt/token";
 import { validateUser } from "@/services/jwt/validate";
-import { findUserWithFields } from "@/services/user";
+import { findUserWithFields } from "@/services/db/user";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {

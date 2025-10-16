@@ -1,6 +1,6 @@
 import { _throwError } from "@/lib/http-request"
 import { buildTokens } from "@/services/jwt/token"
-import { findUserWithFilterRetrieveWithField } from "@/services/user"
+import { findUserWithFilterRetrieveWithField } from "@/services/db/user"
 import { NextResponse } from "next/server"
 
 export async function POST(request) {

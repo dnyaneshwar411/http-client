@@ -2,7 +2,7 @@ import { DUMMY_ACCOUNTS } from "@/config/data";
 import { _throwError, buildUrlWithQueryParams } from "@/lib/http-request";
 import { sendEmail } from "@/services/email";
 import { createOTP } from "@/services/otp";
-import { signUpUserGoogleAccount, findUserWithFields, udpateUserById } from "@/services/user";
+import { signUpUserGoogleAccount, findUserWithFields, udpateUserById } from "@/services/db/user";
 import { auth } from "@clerk/nextjs/server"
 import { addMinutes } from "date-fns";
 import { NextResponse } from "next/server";

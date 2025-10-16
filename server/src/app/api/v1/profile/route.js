@@ -1,6 +1,6 @@
 import { _throwError } from "@/lib/http-request";
 import { buildRequestPayload } from "@/lib/request-parser";
-import { findUserWithFilterRetrieveWithField } from "@/services/user";
+import { findUserWithFilterRetrieveWithField } from "@/services/db/user";
 import { isValidObjectId } from "mongoose";
 import { NextResponse } from "next/server";
 

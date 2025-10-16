@@ -70,16 +70,16 @@ async function sendData(
 export async function fromServer(...args) {
   try {
     let response1 = await fetchData(...args, "access")
-    if (response1.status_code === 200) return response1;
+    if (response1.status_code !== 401) return response1;
 
     const refreshedTokenData = await refreshAccessToken();
-    console.log(refreshedTokenData.status)
-    if (refreshedTokenData.status === 200) return refreshedTokenData;
+    console.log(refreshedTokenData)
+    if (refreshedTokenData.status !== 401) return refreshedTokenData;
 
 
     const response2 = await fetchData(...args, "refresh");
     console.log(response2)
-    if (response2.status_code === 200) return response2;
+    if (response2.status_code !== 401) return response2;
 
     // await Promise.all([
     //   unsetToken("access"),

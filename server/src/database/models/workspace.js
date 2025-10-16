@@ -9,6 +9,10 @@ const workspaceSchema = new Schema({
     type: [Schema.Types.ObjectId],
     ref: "User"
   },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
   collections: {
     type: [Schema.Types.ObjectId],
     ref: "Collection"
