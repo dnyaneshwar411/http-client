@@ -37,6 +37,7 @@ export default function AuthGuardian({ children }) {
       dispatch(loginUserSession(userResponse.data))
       toast.success("Success")
     } catch (error) {
+      dispatch(updateUserSessionStatus("logged-out"))
       toast.error(error.message || "Failed to load Data!");
     }
   }
