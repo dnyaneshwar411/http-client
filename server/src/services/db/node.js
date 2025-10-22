@@ -46,3 +46,11 @@ export const createNewNodeWithFilter = async function (nodeId, collectionId, bod
 
   })
 }
+
+export const findNodeDataWithId = async function (nodeId) {
+  dbConnect()
+  return await Node
+    .find({ parent: nodeId })
+    .populate("request")
+    .lean()
+}

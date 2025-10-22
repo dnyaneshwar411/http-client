@@ -7,7 +7,6 @@ export default function LoggedOutScreen() {
 
   async function updateUserSessionStatusFlow() {
     const response = await api.externalURL("http://localhost:3000/api/auth/sign-in");
-    console.log(response)
     dispatch(updateUserSessionStatus("verify-otp"))
   }
 

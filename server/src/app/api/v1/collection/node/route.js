@@ -1,6 +1,6 @@
-import { _throwError } from "@/lib/http-request";
+import { _throwError, allSearchParams } from "@/lib/http-request";
 import { buildRequestPayload } from "@/lib/request-parser";
-import { checkIfUserHasAccessToNodePath, createNewNodeWithFilter } from "@/services/db/node";
+import { checkIfUserHasAccessToNodePath, createNewNodeWithFilter, findNodeDataWithId } from "@/services/db/node";
 import { isValidObjectId } from "mongoose";
 import { NextResponse } from "next/server";
 
@@ -10,6 +10,13 @@ export async function GET(request) {
     if (!isValidObjectId(userId)) _throwError(
       401, "Bad Request: Invalid request"
     )
+
+    const { nodeId } = allSearchParams(request.url)
+    if (!isValidObjectId(nodeId)) _throwError(
+      400, "BAD Request: nodeId should be a valid mongo objectId."
+    )
+
+    const data = await findNodeDataWithId(nodeId)
 
     return NextResponse.json({
       status_code: 200,

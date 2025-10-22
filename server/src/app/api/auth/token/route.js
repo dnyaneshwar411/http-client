@@ -7,7 +7,6 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     const { status, message, payload } = await verifyRefreshToken(request)
-    console.log(status, message, payload)
 
     if (status === "logged-out") return NextResponse.json({
       status_code: 401,

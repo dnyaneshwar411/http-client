@@ -13,7 +13,6 @@ export async function GET(request) {
     )
 
     const data = await findUserWithFilterRetrieveWithField({ _id }, "")
-    console.log(data)
     if (!Boolean(data)) _throwError(
       400, "BAD Request: User with these credentials not found!"
     )
@@ -23,7 +22,6 @@ export async function GET(request) {
       data
     })
   } catch (error) {
-    console.error(error)
     return NextResponse.json({
       status_code: error.statusCode || 500,
       message: error.message || "Internal Server Error."

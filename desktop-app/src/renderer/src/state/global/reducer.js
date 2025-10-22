@@ -169,6 +169,32 @@ export function reducer(state, action) {
         }
       }
 
+    case "WORKSPACE_FETCHED":
+      return {
+        ...state,
+        workspaces: action
+          .payload
+          .map((workspace, idx) => idx === 0
+            ? ({ ...workspace, selected: true })
+            : ({ ...workspace, selected: false })),
+        ui: {
+          state: "workspacesF"
+        }
+      }
+
+    case "WORKSPACE_SELECTION":
+      return {
+        ...state,
+        workspaces: state
+          .workspaces
+          .map((workspace) => workspace._id === action.payload
+            ? ({ ...workspace, selected: true })
+            : ({ ...workspace, selected: false })),
+        ui: {
+          state: "workspacesF"
+        }
+      }
+
     default:
       return state;
   }
@@ -253,6 +279,20 @@ export function deleteEnvironmentVariable(payload) {
 export function updateEnvironmentVariable(payload) {
   return {
     type: "UPDATE_ENVIRONMENT_VARIABLE",
+    payload
+  }
+}
+
+export function workspacesFetched(payload) {
+  return {
+    type: "WORKSPACE_FETCHED",
+    payload
+  }
+}
+
+export function workspaceSelection(payload) {
+  return {
+    type: "WORKSPACE_SELECTION",
     payload
   }
 }

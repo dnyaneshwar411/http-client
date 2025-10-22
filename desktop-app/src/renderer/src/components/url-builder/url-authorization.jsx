@@ -25,7 +25,6 @@ function URLAuthorizationSelection() {
     state: { authorization: { selected, ...authorization } },
     dispatch
   } = useRequestContext();
-  console.log(authorization)
   return <div className="w-[30%] pr-4 border-r-1">
     <Select
       value={selected}

@@ -8,10 +8,8 @@ import { NextResponse } from "next/server";
 export async function GET(request) {
   try {
     const { _id: userId } = buildRequestPayload(request);
-    console.log(request.url)
 
     const { workspaceId } = allSearchParams(request.url)
-    console.log(workspaceId)
     if (!isValidObjectId(workspaceId)) _throwError(
       400, "BAD Request: workspaceId should be a valid mongo objectId."
     )

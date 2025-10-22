@@ -15,9 +15,7 @@ function URLContainer() {
 
   async function sendRequest() {
     const api = await window.api.fromServer("collection", { params: { userId: "68e4014d94f556f086cf0afd", workspaceId: "68e5194e4231f8f0422990e4" } })
-    console.log(api)
     // const data = await window.api.request(state)
-    // console.log(data)
   }
 
   return <div className="mt-4 px-4 py-2 flex items-center gap-4">

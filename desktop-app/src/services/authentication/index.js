@@ -9,7 +9,6 @@ const BASE_URL = "https://useful-ant-96.clerk.accounts.dev/oauth/authorize?redir
 
 export function authenticateWeb() {
   const endpoint = `${BASE_URL}/auth/sign-in`
-  console.log(endpoint)
   shell.openExternal(endpoint)
 }
 

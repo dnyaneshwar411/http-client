@@ -28,7 +28,6 @@ async function dbConnect() {
         return mongooseInstance;
       })
       .catch((err) => {
-        console.error("MongoDB connection error:", err);
         throw err;
       });
   }

@@ -1,4 +1,7 @@
 export const initialState = {
+  ui: {
+    state: "building", // building, workspacesF, collectionF
+  },
 
   user: {
     // loading, logged-in, logged-out, verify-otp, error, session-created
@@ -46,5 +49,8 @@ export const initialState = {
       hasError: false,
       message: ""
     }
-  }
+  },
+
+
+  workspaces: []
 }

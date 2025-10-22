@@ -33,7 +33,6 @@ async function refreshAccessToken() {
 
 async function fetchData(path, config = {}, type) {
   const token = await buildToken(type)
-  console.log(type, token)
   const endpoint = buildUrlWithQueryParams(`${BASE_URL}/api/${path}`, config.params)
   const response = await fetch(endpoint, {
     headers: {
@@ -54,7 +53,6 @@ async function sendData(
   type
 ) {
   const token = await buildToken(type);
-  console.log(type, token)
   const endpoint = buildUrlWithQueryParams(`${BASE_URL}/api/${path}`, params)
   const response = await fetch(endpoint, {
     method,
@@ -73,12 +71,10 @@ export async function fromServer(...args) {
     if (response1.status_code !== 401) return response1;
 
     const refreshedTokenData = await refreshAccessToken();
-    console.log(refreshedTokenData)
     if (refreshedTokenData.status !== 401) return refreshedTokenData;
 
 
     const response2 = await fetchData(...args, "refresh");
-    console.log(response2)
     if (response2.status_code !== 401) return response2;
 
     // await Promise.all([
@@ -88,7 +84,6 @@ export async function fromServer(...args) {
 
     return response2;
   } catch (error) {
-    console.error(error)
     return {
       status_code: 500,
       message: error.message || "Internal Server Error"

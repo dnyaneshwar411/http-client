@@ -29,7 +29,6 @@ export async function sendRequestAtURL(config) {
 
   const response = await fetch(request)
   const data = await response.text()
-  console.log(response, typeof response.headers, Object(response.headers))
   return {
     data,
     headers: Object(response.headers),
@@ -113,7 +112,6 @@ export function buildRequestHeaders(headersList) {
 }
 
 export function buildAuthObject(authorization) {
-  console.log(authorization)
   switch (authorization.selected) {
     case "bearer": {
       return `Bearer ${authorization.bearer.value}`

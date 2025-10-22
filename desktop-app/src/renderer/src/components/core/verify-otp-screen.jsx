@@ -18,7 +18,6 @@ export default function VerifyOTPScreen() {
     try {
       setLoading(true);
       const response = await api.createUserSession(otp);
-      console.log(response)
 
       if (response.status_code === 401) {
         dispatch(updateUserSessionStatus("logged-in"))
