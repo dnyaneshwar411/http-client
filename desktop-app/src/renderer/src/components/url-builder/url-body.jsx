@@ -18,7 +18,6 @@ export default function URLBody() {
     },
     dispatch
   } = useRequestContext()
-
   return <TabsContent value="body">
     <Tabs
       value={selected}

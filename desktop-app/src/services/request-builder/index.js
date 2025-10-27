@@ -1,6 +1,7 @@
 import { buildUrlWithQueryParams } from "../../renderer/src/lib/request";
 
 export async function sendRequestAtURL(config) {
+  console.log(config)
   const endpoint = buildRequestURL(config.url.value, config.params.values)
 
   const body = buildRequestBody(config.body)
@@ -28,6 +29,7 @@ export async function sendRequestAtURL(config) {
   });
 
   const response = await fetch(request)
+  console.log(response)
   const data = await response.text()
   return {
     data,

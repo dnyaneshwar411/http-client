@@ -195,6 +195,51 @@ export function reducer(state, action) {
         }
       }
 
+    case "REQUEST_SELECTION": {
+      const selected = state
+        .requests
+        .selected
+        .find(request => request._id === action.payload._id)
+      if (selected) return state
+      return {
+        ...state,
+        requests: {
+          ...state.requests,
+          current: action.payload._id,
+          selected: [
+            ...state.requests.selected,
+            action.payload
+          ]
+        }
+      }
+    }
+
+    case "REQUEST_UNSELECTION": {
+      const requests = state
+        .requests
+        .selected
+        .filter(request => request._id !== action.payload)
+      return {
+        ...state,
+        requests: {
+          ...state.requests,
+          current: action.payload === state.requests.current
+            ? requests[0]?._id
+            : state.requests.current,
+          selected: requests
+        }
+      }
+    }
+
+    case "REQUEST_CURRENT_SELECTION":
+      return {
+        ...state,
+        requests: {
+          ...state.requests,
+          current: action.payload
+        }
+      }
+
     default:
       return state;
   }
@@ -293,6 +338,27 @@ export function workspacesFetched(payload) {
 export function workspaceSelection(payload) {
   return {
     type: "WORKSPACE_SELECTION",
+    payload
+  }
+}
+
+export function requestSelection(payload) {
+  return {
+    type: "REQUEST_SELECTION",
+    payload
+  }
+}
+
+export function requestUnselection(payload) {
+  return {
+    type: "REQUEST_UNSELECTION",
+    payload
+  }
+}
+
+export function requestCurrentSelection(payload) {
+  return {
+    type: "REQUEST_CURRENT_SELECTION",
     payload
   }
 }

@@ -4,8 +4,11 @@ import { reducer } from "./reducer";
 
 export const RequestContext = createContext();
 
-export function RequestContextProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState)
+export function RequestContextProvider({
+  children,
+  config
+}) {
+  const [state, dispatch] = useReducer(reducer, config)
   return <RequestContext.Provider value={{
     dispatch,
     state

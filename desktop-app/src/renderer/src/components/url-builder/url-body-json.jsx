@@ -12,9 +12,8 @@ export default function URLBodyJSON() {
     },
     dispatch
   } = useRequestContext()
-
   return (
-    <TabsContent value="json">
+    <TabsContent value="raw">
       <Textarea
         value={values}
         onChange={e => dispatch(bodyJSONUpdate((e.target.value)))}

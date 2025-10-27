@@ -6,8 +6,8 @@ export const methods = [
   { id: 5, name: "DELETE", value: "DELETE" },
   { id: 6, name: "HEAD", value: "HEAD" },
   { id: 7, name: "OPTIONS", value: "OPTIONS" },
-  { id: 8, name: "CONNECT", value: "CONNECT" },
-  { id: 9, name: "TRACE", value: "TRACE" }
+  // { id: 8, name: "CONNECT", value: "CONNECT" },
+  // { id: 9, name: "TRACE", value: "TRACE" }
 ];
 
 export const requestConfigs = [
@@ -51,7 +51,7 @@ export const requestBodyOptions = [
   { id: 1, name: "none", value: "none" },
   { id: 2, name: "form-data", value: "form-data" },
   // { id: 3, name: "x-www-form-urlencoded", value: "x-www-form-urlencoded" },
-  { id: 4, name: "raw", value: "json" },
+  { id: 4, name: "raw", value: "raw" },
 ]
 
 export const urlBodyPayloadFormDataInputTypes = [

@@ -1,3 +1,5 @@
+import { initialState } from "./config";
+
 export function reducer(state, action) {
   switch (action.type) {
 
@@ -453,5 +455,85 @@ export function bodyJSONUpdate(payload) {
   return {
     type: "BODY_JSON_UPDATE",
     payload
+  }
+}
+
+export function requestPayload(config) {
+  return {
+    ...initialState,
+
+    method: {
+      value: config.method || "GET",
+      error: {
+        hasError: false,
+        message: "",
+      }
+    },
+
+    url: {
+      value: config.url || "",
+      error: {
+        hasError: false,
+        message: "",
+      }
+    },
+
+    params: {
+      values: config
+        .params
+        .map((param, index) => ({
+          id: index,
+          ...param
+        })),
+
+      error: {
+        hasError: false,
+        message: ""
+      }
+    },
+
+    headers: {
+      values: config
+        .headers
+        .map((header, index) => ({
+          id: index,
+          ...header
+        })),
+
+      errors: {
+        hasError: false,
+        message: ""
+      }
+    },
+
+
+    body: {
+      selected: config.body.selected,
+
+      values: {
+        error: {
+          hasError: false,
+          message: ""
+        },
+        payload: {}
+      },
+
+      formData: {
+        // values: config.formData,
+        values: [],
+        error: {
+          hasError: false,
+          message: ""
+        }
+      },
+
+      json: {
+        values: JSON.stringify(config.body.json),
+        error: {
+          hasError: false,
+          message: ""
+        }
+      }
+    }
   }
 }

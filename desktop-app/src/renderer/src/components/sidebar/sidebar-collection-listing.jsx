@@ -5,6 +5,7 @@ import { ChevronDown, ChevronRight, EllipsisVertical } from "lucide-react";
 import cn from "../../lib/cn";
 import { charSplit } from "../../lib/formatter";
 import { MethodColor } from "../../config/method";
+import { requestSelection } from "../../state/global/reducer";
 
 export default function SidebarCollectionListing() {
   const {
@@ -35,9 +36,6 @@ export default function SidebarCollectionListing() {
       key={collection._id}
       collection={collection}
     />)}
-    {/* <button onClick={mutate}>
-      fetch again
-    </button> */}
   </div>
 }
 
@@ -91,14 +89,19 @@ function RequestNode({ nodeId }) {
 }
 
 function Request({ node }) {
-  const { request } = node
+  const { dispatch } = useGlobalContext();
+  const { request } = node;
   const color = MethodColor[request.method] || "bg-green-600"
 
-  return <div className="flex items-center hover:[&_.options]:opacity-100 border-l-1 border-dashed border-[#111111] pl-3">
+  return <button
+    onClick={() => dispatch(requestSelection(request))}
+    className="flex items-center hover:[&_.options]:opacity-100 border-l-1 border-dashed border-[#111111] pl-3 cursor-pointer hover:text-white">
     <p className={cn(
       "w-full max-w-[6ch] font-bol text-xs mr-2 text-right",
       color
     )}>{request.method}</p>
-    <p className="text-xs whitespace-nowrap text-ellipsis">{charSplit(node.name, { words: 4 })}</p>
-  </div>
+    <p className="text-xs whitespace-nowrap text-ellipsis">
+      {charSplit(request.name, { words: 4 })}
+    </p>
+  </button>
 }

@@ -9,13 +9,12 @@ import {
 } from "../../ui/select";
 import cn from '../../lib/cn';
 import { buildRequestURL } from "../../../../services/request-builder";
+import { MethodColor } from "../../config/method";
 
 function URLContainer() {
   const { state } = useRequestContext()
-
   async function sendRequest() {
-    const api = await window.api.fromServer("collection", { params: { userId: "68e4014d94f556f086cf0afd", workspaceId: "68e5194e4231f8f0422990e4" } })
-    // const data = await window.api.request(state)
+    const response = await window.api.request(state)
   }
 
   return <div className="mt-4 px-4 py-2 flex items-center gap-4">
@@ -25,7 +24,8 @@ function URLContainer() {
       className="!font-bold"
       onClick={sendRequest}
     >
-      Send</Button>
+      Send
+    </Button>
   </div>
 }
 
@@ -39,14 +39,17 @@ function SelectMethod() {
     onValueChange={method => dispatch(changeMethod({ value: method, error }))}
   >
     <SelectTrigger className="min-w-[140px] !bg-[var(--color-surface)] cursor-pointer">
-      <SelectValue placeholder="Method" />
+      <SelectValue
+        placeholder="Method"
+      // className={cn(MethodColor[value])}
+      />
     </SelectTrigger>
     <SelectContent className="bg-[var(--color-surface)]">
       <SelectGroup>
         {methods.map(method => <SelectItem
           value={method.value}
           key={method.id}
-          className=""
+          className={cn(MethodColor[method.value])}
         >
           {method.name}
         </SelectItem>)}

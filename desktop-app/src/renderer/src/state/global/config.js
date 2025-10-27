@@ -52,5 +52,11 @@ export const initialState = {
   },
 
 
-  workspaces: []
+  workspaces: [],
+
+  // selected requests.
+  requests: {
+    current: undefined,
+    selected: []
+  }
 }
